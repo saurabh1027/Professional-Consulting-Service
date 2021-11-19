@@ -28,15 +28,15 @@ public class EmployeeController {
 		return employeeService.getEmployees();
 	}
 	
-	//Register
-	@PostMapping("")
-	public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
-		return employeeService.createEmployee(employee);
-	}
-	
 	@GetMapping("{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long id) {
 		return employeeService.getEmployeeById(id);
+	}
+	
+//	Register
+	@PostMapping("")
+	public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
+		return employeeService.createEmployee(employee);
 	}
 	
 	@PatchMapping("{id}")
