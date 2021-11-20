@@ -8,4 +8,5 @@ import com.example.demo.models.Skill;
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, Long>{
 	public Skill findByTitle(String title); 
+	
 }

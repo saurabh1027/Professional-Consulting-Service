@@ -8,26 +8,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Employee;
-import com.example.demo.repositories.EmployeeRepo;
-import com.example.demo.repositories.SkillRepository;
+import com.example.demo.models.Skill;
 import com.example.demo.services.EmployeeService;
 
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
-	@Autowired
-	private SkillRepository skillRepository;
-	@Autowired
-	private EmployeeRepo employeeRepo;
+	
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	
 	
 	@GetMapping("")
 	public List<Employee> getEmployees(){
@@ -56,6 +55,13 @@ public class EmployeeController {
 	@RequestMapping(path="{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<?> deleteEmployee(@PathVariable("id") long id) {
 		return employeeService.deleteEmployee(id);
+	}
+	
+	
+	@PutMapping("{id}/skills")
+	public ResponseEntity<?> addSkills(@RequestBody List<Long> skillIds,@PathVariable("id") long eid){
+		System.out.println("Statement 1");
+		return employeeService.addSkills(skillIds,eid);
 	}
 //	
 //	@PutMapping("/{employeeId}/skill/{skillId}")

@@ -18,10 +18,15 @@ import com.example.demo.services.SkillService;
 public class SkillController {
 	@Autowired
 	SkillService skillService;
+	//Only managers can create skills
 	@PostMapping("")
 	public ResponseEntity<?> createSkill(@RequestBody Skill skill) {
+		
 		return skillService.createSkill(skill);
 	}
+	
+	
+	
 	
 	@GetMapping("")
 	public ResponseEntity<List<Skill>> getSkills(){

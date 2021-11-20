@@ -3,8 +3,10 @@ package com.example.demo.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,12 +30,12 @@ public class Skill {
 	@Column
 	private String description;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinTable(
-			name = "manager_skill",
+			name = "employee_skill",
 			joinColumns = @JoinColumn(name="skill_id"),
-			inverseJoinColumns = @JoinColumn(name="manager_id"))
-	Set<Employee> managers = new HashSet<>();
+			inverseJoinColumns = @JoinColumn(name="employee_id"))
+	Set<Employee> employees = new HashSet<>();
 	
 //	Constructors
 	public Skill(long id, String title, String category, String desc) {
@@ -66,6 +68,7 @@ public class Skill {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
 	public String getCategory() {
 		return category;
 	}
@@ -78,15 +81,18 @@ public class Skill {
 	public void setDescription(String desc) {
 		this.description = desc;
 	}
-	public Set<Employee> getManagers() {
-		return managers;
+	public Set<Employee> getEmployees() {
+		return employees;
 	}
-	public void setManagers(Set<Employee> managers) {
-		this.managers = managers;
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
 	}
 	@Override
 	public String toString() {
 		return "Skill [id=" + id + ", title=" + title + ", category=" + category + ", description=" + description
-				+ ", managers=" + managers + "]";
+				+ ", employees=" + employees + "]";
 	}
+	
+	
+	
 }
