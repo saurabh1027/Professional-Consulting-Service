@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Employee;
-import com.example.demo.models.Skill;
 import com.example.demo.services.EmployeeService;
 
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
-	
-	
 	@Autowired
 	private EmployeeService employeeService;
-	
-	
-	
+
 	@GetMapping("")
 	public List<Employee> getEmployees(){
 		return employeeService.getEmployees();
@@ -59,20 +55,13 @@ public class EmployeeController {
 	
 	
 	@PutMapping("{id}/skills")
-	public ResponseEntity<?> addSkills(@RequestBody List<Long> skillIds,@PathVariable("id") long eid){
-		System.out.println("Statement 1");
-		return employeeService.addSkills(skillIds,eid);
+	public ResponseEntity<?> selectSkills(@RequestBody List<Long> skillIds,@PathVariable("id") long eid){
+		return employeeService.selectSkills(skillIds,eid);
 	}
-//	
-//	@PutMapping("/{employeeId}/skill/{skillId}")
-//	Employee addSkillForEmployee(
-//			@PathVariable("employeeId") long employeeId,
-//			@PathVariable("skillId") long skillId
-//			) {
-//		Employee employee=employeeRepo.findById(employeeId).get();
-//		Skill skill=skillRepository.findById(skillId).get();
-//		employee.setSkills((Set<Skill>) skill);
-//		return  employeeRepo.save(employee);
-//	}
+	
+	@DeleteMapping("{id}/skills")
+	public ResponseEntity<?> deSelectSkills(@RequestBody List<Long> skillIds,@PathVariable("id") long eid){
+		return employeeService.deSelectSkills(skillIds,eid);
+	}
 	
 }

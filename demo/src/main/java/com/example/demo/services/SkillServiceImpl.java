@@ -1,7 +1,6 @@
 package com.example.demo.services;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +18,12 @@ public class SkillServiceImpl implements SkillService{
 	@Override
 	public ResponseEntity<?> createSkill(Skill skill) {
 		try {
-			System.out.println(skillRepository.findByTitle(skill.getTitle()));
+			if(skillRepository.findByTitle(skill.getTitle()) != null) {
+				throw new Exception("Skill already exists!");
+			}
 			skillRepository.save(skill);
 			return ResponseEntity.ok("Skill added Successfully");
-		} catch (NoSuchElementException e) {
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Already Exists!");
 		}
 	}

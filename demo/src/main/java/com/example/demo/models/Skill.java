@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "Skill")
 public class Skill {
@@ -30,6 +32,7 @@ public class Skill {
 	@Column
 	private String description;
 	
+	@JsonBackReference
 	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "employee_skill",

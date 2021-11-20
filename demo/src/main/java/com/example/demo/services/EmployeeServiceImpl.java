@@ -1,9 +1,7 @@
 package com.example.demo.services;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,34 +84,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public ResponseEntity<?> addSkills(List<Long> skillIds, long eid) {
-			Set<Skill> skills =new HashSet<Skill>();
+	public ResponseEntity<?> selectSkills(List<Long> skillIds, long eid) {
 		try {
-			Employee employee=employeeRepo.findById(eid).get();
-//			Set<Skill> employeeSkills=employee.getSkills();
-//			for(Long skillId:skillIds) {
-//				Skill skill=skillRepository.findById(skillId).get();
-//					Set<Employee> employees=skill.getEmployees();
-//					employees.add(employee);
-//					skill.setEmployees(employees);
-//				skills.add(skill);
-//			}
-//			employeeSkills.addAll(skills);
-//			employee.setSkills(employeeSkills);
-//			employeeRepo.save(employee);
-			for(long skillId:skillIds) {
-				Skill skill=skillRepository.findById(skillId).get();
+			Employee employee = employeeRepo.findById(eid).get();
+			for(long id:skillIds) {
+				Skill skill = skillRepository.findById(id).get();
 				skill.getEmployees().add(employee);
 				employee.getSkills().add(skill);
 			}
-			System.out.println(employee);
 			employeeRepo.save(employee);
 			return ResponseEntity.ok().body("Skills added to employee");
-			
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not found");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No Element Found!");
 		}
 	}
-	
+
+	@Override
+	public ResponseEntity<?> deSelectSkills(List<Long> skillIds, long eid) {
+		try {
+			Employee employee = employeeRepo.findById(eid).get();
+			for(long id:skillIds) {
+				Skill skill = skillRepository.findById(id).get();
+				skill.getEmployees().remove(employee);
+				employee.getSkills().remove(skill);
+			}
+			employeeRepo.save(employee);
+			return ResponseEntity.ok().body("Skills de-selected successfully!");
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No Element Found!");
+		}
+	}
 
 }
