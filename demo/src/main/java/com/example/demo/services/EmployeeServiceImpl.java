@@ -25,12 +25,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 					.status(HttpStatus.CONFLICT)
 					.body("Employee with the same email is already present!");
 		}
-		if(employee.getRole().trim().equals("Employee")) {
-			employeeRepo.save(employee);
-			return ResponseEntity.ok().body(null);
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-		}
+		employeeRepo.save(employee);
+		return ResponseEntity.ok().body("Employee Created!");
 	}
 
 	@Override
@@ -76,6 +72,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}catch (NoSuchElementException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
+	}
+
+	@Override
+	public Employee getEmployeeByEmail(String email) {
+		return employeeRepo.findByEmail(email);
 	}
 
 }

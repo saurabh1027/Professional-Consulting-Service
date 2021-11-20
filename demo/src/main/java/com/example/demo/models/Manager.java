@@ -8,14 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "Employee")
-public class Employee {
+@Table(name = "Manager")
+public class Manager {
 	
 //	Attributes
 	@Id
@@ -28,93 +28,71 @@ public class Employee {
 	@Column
 	private String name;
 	@Column
-	private String bio;
+	private String address;
+	@Column
+	private String dob;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "managers")
+	Set<Skill> skills = new HashSet<>();
 	
-//	@ManyToMany(mappedBy = "employees")
-//	Set<Skill> skills = new HashSet<>();
-	@OneToMany(mappedBy = "employee")
-	private Set<Certificate> certificates = new HashSet<Certificate>();
-
-
-	public Employee(long id, String email, String password, String name, String bio, Set<Certificate> certificates) {
+	public Manager(long id, String email, String password, String name, String address, String dob, Set<Skill> skills) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.bio = bio;
-		this.certificates = certificates;
+		this.address = address;
+		this.dob = dob;
+		this.skills = skills;
 	}
-
-
-	public Employee() {
+	public Manager() {
 		super();
 	}
-
-
 	public long getId() {
 		return id;
 	}
-
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-
 	public String getEmail() {
 		return email;
 	}
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 	public String getName() {
 		return name;
 	}
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	public String getBio() {
-		return bio;
+	public String getAddress() {
+		return address;
 	}
-
-
-	public void setBio(String bio) {
-		this.bio = bio;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-
-	public Set<Certificate> getCertificates() {
-		return certificates;
+	public String getDob() {
+		return dob;
 	}
-
-
-	public void setCertificates(Set<Certificate> certificates) {
-		this.certificates = certificates;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
-
-
+	public Set<Skill> getSkills() {
+		return skills;
+	}
+	public void setSkills(Set<Skill> skills) {
+		this.skills = skills;
+	}
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", email=" + email + ", password=" + password + ", name=" + name + ", bio=" + bio
-				+ ", certificates=" + certificates + "]";
+		return "Manager [id=" + id + ", email=" + email + ", password=" + password + ", name=" + name + ", address="
+				+ address + ", dob=" + dob + ", skills=" + skills + "]";
 	}
-	
 }

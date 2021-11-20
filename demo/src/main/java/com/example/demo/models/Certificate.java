@@ -10,6 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Certificate")
 public class Certificate {
@@ -22,7 +27,10 @@ public class Certificate {
 	private String name;
 	@Column
 	private String description;
-	@ManyToOne(cascade = CascadeType.ALL)
+	
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "employee_id",referencedColumnName = "id")
 	private Employee employee;
 	

@@ -1,13 +1,16 @@
 package com.example.demo.models;
 
-import javax.persistence.CascadeType;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,9 +27,13 @@ public class Skill {
 	private String category; 
 	@Column
 	private String description;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "employee_id",referencedColumnName = "id")
-	private Employee employee;
+	
+	@ManyToMany
+	@JoinTable(
+			name = "manager_skill",
+			joinColumns = @JoinColumn(name="skill_id"),
+			inverseJoinColumns = @JoinColumn(name="manager_id"))
+	Set<Employee> managers = new HashSet<>();
 	
 //	Constructors
 	public Skill(long id, String title, String category, String desc) {
@@ -71,17 +78,15 @@ public class Skill {
 	public void setDescription(String desc) {
 		this.description = desc;
 	}
-	public Employee getEmployee() {
-		return employee;
+	public Set<Employee> getManagers() {
+		return managers;
 	}
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setManagers(Set<Employee> managers) {
+		this.managers = managers;
 	}
-	
-	//	toString()
 	@Override
 	public String toString() {
 		return "Skill [id=" + id + ", title=" + title + ", category=" + category + ", description=" + description
-				+ ", employee=" + employee + "]";
+				+ ", managers=" + managers + "]";
 	}
 }

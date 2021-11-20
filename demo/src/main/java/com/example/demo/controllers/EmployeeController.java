@@ -14,11 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Employee;
+import com.example.demo.repositories.EmployeeRepo;
+import com.example.demo.repositories.SkillRepository;
 import com.example.demo.services.EmployeeService;
 
 @RestController
 @RequestMapping("employees")
 public class EmployeeController {
+	@Autowired
+	private SkillRepository skillRepository;
+	@Autowired
+	private EmployeeRepo employeeRepo;
 	
 	@Autowired
 	private EmployeeService employeeService;
@@ -51,5 +57,16 @@ public class EmployeeController {
 	public ResponseEntity<?> deleteEmployee(@PathVariable("id") long id) {
 		return employeeService.deleteEmployee(id);
 	}
+//	
+//	@PutMapping("/{employeeId}/skill/{skillId}")
+//	Employee addSkillForEmployee(
+//			@PathVariable("employeeId") long employeeId,
+//			@PathVariable("skillId") long skillId
+//			) {
+//		Employee employee=employeeRepo.findById(employeeId).get();
+//		Skill skill=skillRepository.findById(skillId).get();
+//		employee.setSkills((Set<Skill>) skill);
+//		return  employeeRepo.save(employee);
+//	}
 	
 }

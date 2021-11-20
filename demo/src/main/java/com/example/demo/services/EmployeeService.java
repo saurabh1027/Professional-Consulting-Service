@@ -17,4 +17,6 @@ public interface EmployeeService {
 	
 	public ResponseEntity<?> deleteEmployee(long id);
 	
+	public Employee getEmployeeByEmail(String email);
+	
 }
