@@ -1,24 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid d-flex justify-content-around">
-    
-    <div class='logo'>
-      <a class="navbar-brand" href="#">Professional Consultancy Service</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<div class="container-fluid px-0" style="min-height: 100vh;">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 12vh;">
+    <div class="container-fluid d-flex justify-content-around">
+      
+      <div class='logo'>
+        <a class="navbar-brand" routerLink="">Professional Consultancy Service</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="flex-grow: initial;">
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <li class="nav-item ">
+          <button class="btn btn-outline-success mx-2" routerLink="login" type="submit">Login</button>
+        </li>
+      </div>
     </div>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="flex-grow: initial;">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-      <li class="nav-item ">
-        <button class="btn btn-outline-success mx-2" routerLink="login" type="submit">Login</button>
-      </li>
-    </div>
+  </nav>
+  <div class="container d-flex align-items-center justify-content-center py-5" style="min-height: 82vh;">
+    <router-outlet></router-outlet>
   </div>
-</nav>
-<div class="container">
-  <router-outlet></router-outlet>
+  <footer class="text-white footer w-100 bg-dark d-flex justify-content-center align-items-center" style="height: 8vh;">
+    <span class="">All rights reserved @2021</span>
+  </footer>
 </div>

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.example.demo.models.Certificate;
-import com.example.demo.models.Employee;
 
 public interface CertificateService {
 	

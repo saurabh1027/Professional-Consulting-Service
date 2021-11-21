@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			}
 			
 			employeeRepo.save(newEmployee);
-			return ResponseEntity.ok().body(null);
+			return ResponseEntity.ok().body("Employee Updated!");
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No record found!");
 		}

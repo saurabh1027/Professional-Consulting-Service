@@ -22,11 +22,11 @@ export class DashboardComponent implements OnInit {
 
   isLoggedIn(){
     let employeeString:string|null = sessionStorage.getItem("employee")
-    let employee:Employee = new Employee(0,'','','','','');
     if(employeeString){
-      employee = JSON.parse(employeeString)
-      this.employeeService.getEmployee(employee.id).subscribe(data=>{
+      this.employee = JSON.parse(employeeString)
+      this.employeeService.getEmployee(this.employee.id).subscribe(data=>{
         this.employee = data
+        sessionStorage.setItem('employee',JSON.stringify(this.employee))
       },error=>{
         if(error.status==400){
           alert(error)
@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   updateEmployee(){
     this.employeeService.updateEmployee(this.employee).subscribe(data=>{
       alert(data)
+      sessionStorage.setItem('employee',JSON.stringify(this.employee))
     },error=>{
       if(error.status == 400){
         alert(error)

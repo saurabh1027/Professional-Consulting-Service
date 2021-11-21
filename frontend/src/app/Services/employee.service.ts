@@ -18,18 +18,24 @@ export class EmployeeService {
     return this.http.get<Employee>(this.baseUrl+'authenticate',{params:params})
   }
 
-  public updateEmployee(employee:Employee){
-    return this.http.patch(this.baseUrl+'employees/'+employee.id,employee)
-  }
-
   public getEmployee(id:number):Observable<Employee>{
     return this.http.get<Employee>(this.baseUrl+"employees/"+id)
   }
 
-  public getEmployees(){
-    this.http.get(this.baseUrl+'employees').subscribe(data=>{
-      
-    })
+  public createEmployee(employee:Employee){
+    return this.http.post(this.baseUrl+'employees/',employee)
+  }
+
+  public updateEmployee(employee:Employee){
+    return this.http.patch(this.baseUrl+'employees/'+employee.id,employee)
+  }
+
+  public deleteEmployee(id:number){
+    return this.http.delete(this.baseUrl+'employees/'+id)
+  }
+
+  public getEmployees():Observable<Employee[]>{
+    return this.http.get<Employee[]>(this.baseUrl+'employees')
   }
 
 }
