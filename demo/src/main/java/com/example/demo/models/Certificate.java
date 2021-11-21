@@ -28,6 +28,7 @@ public class Certificate {
 	@Column
 	private String description;
 	
+	//Use for one-to-many or many-to-one
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@OnDelete(action = OnDeleteAction.CASCADE)

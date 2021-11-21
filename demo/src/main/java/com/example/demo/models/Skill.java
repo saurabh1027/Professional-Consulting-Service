@@ -15,10 +15,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
 @Table(name = "Skill")
+//User for many-to-many relationships
+@JsonIdentityInfo(
+		  generator = PropertyGenerator.class, 
+		  property = "id")
 public class Skill {
 
 //	Attributes
@@ -32,7 +37,6 @@ public class Skill {
 	@Column
 	private String description;
 	
-	@JsonBackReference
 	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "employee_skill",

@@ -14,10 +14,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
 @Table(name = "Employee")
+@JsonIdentityInfo(
+		generator = PropertyGenerator.class,
+		property ="id")
 public class Employee {
 	
 //	Attributes
@@ -35,12 +40,9 @@ public class Employee {
 	@Column
 	private String bio;
 	
-//	@ManyToMany(mappedBy = "employees")
-//	Set<Skill> skills = new HashSet<>();
 	@OneToMany(mappedBy = "employee")
 	private Set<Certificate> certificates = new HashSet<Certificate>();
 	
-	@JsonManagedReference
 	@ManyToMany(mappedBy = "employees",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	Set<Skill> skills = new HashSet<>();
 
