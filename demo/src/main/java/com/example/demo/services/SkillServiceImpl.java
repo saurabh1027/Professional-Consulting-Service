@@ -28,16 +28,7 @@ public class SkillServiceImpl implements SkillService{
 		}
 	}
 
-	@Override
-	public ResponseEntity<?> updateSkill(Skill skill) {
-		return null;
-	}
 
-	@Override
-	public ResponseEntity<?> deleteSkill(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ResponseEntity<List<Skill>> getSkills() {

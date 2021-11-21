@@ -11,10 +11,6 @@ import com.example.demo.models.Skill;
 public interface SkillService {
 	public ResponseEntity<?> createSkill(Skill skill);
 	
-	public ResponseEntity<?> updateSkill(Skill skill);
-	
-	public ResponseEntity<?> deleteSkill(long id);
-	
 	public ResponseEntity<List<Skill>> getSkills();
 
 }
