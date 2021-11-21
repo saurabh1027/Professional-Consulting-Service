@@ -28,6 +28,8 @@ public class SkillServiceImpl implements SkillService{
 		}
 	}
 
+
+
 	@Override
 	public ResponseEntity<List<Skill>> getSkills() {
 		return ResponseEntity.ok(skillRepository.findAll());

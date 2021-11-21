@@ -20,10 +20,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
 @Table(name = "Skill")
-//User for many-to-many relationships
 @JsonIdentityInfo(
-		  generator = PropertyGenerator.class, 
-		  property = "id")
+		generator = PropertyGenerator.class,
+		property ="id")
 public class Skill {
 
 //	Attributes
@@ -36,6 +35,7 @@ public class Skill {
 	private String category; 
 	@Column
 	private String description;
+	
 	
 	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinTable(

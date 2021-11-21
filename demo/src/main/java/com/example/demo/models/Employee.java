@@ -40,9 +40,12 @@ public class Employee {
 	@Column
 	private String bio;
 	
+//	@ManyToMany(mappedBy = "employees")
+//	Set<Skill> skills = new HashSet<>();
 	@OneToMany(mappedBy = "employee")
 	private Set<Certificate> certificates = new HashSet<Certificate>();
 	
+
 	@ManyToMany(mappedBy = "employees",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	Set<Skill> skills = new HashSet<>();
 
