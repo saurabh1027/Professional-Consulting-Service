@@ -9,7 +9,7 @@ import { EmployeeService } from 'src/app/Services/employee.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  employee:Employee = new Employee(0,'','','','','');
+  employee:Employee = new Employee(0,'','','','','',[]);
 
   constructor(
     private employeeService:EmployeeService,

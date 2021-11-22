@@ -27,7 +27,7 @@ export class EmployeeService {
   }
 
   public updateEmployee(employee:Employee){
-    return this.http.patch(this.baseUrl+'employees/'+employee.id,employee)
+    return this.http.patch(this.baseUrl+'employees/'+employee.id,employee,{responseType:"text"})
   }
 
   public deleteEmployee(id:number){
