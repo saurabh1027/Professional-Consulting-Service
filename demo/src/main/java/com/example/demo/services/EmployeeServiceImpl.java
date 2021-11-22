@@ -64,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<Employee> getEmployees() {
-		return employeeRepo.findAll();
+		return employeeRepo.findAllByRole("Employee");
 	}
 
 	@Override
@@ -72,9 +72,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		try {
 			employeeRepo.findById(id).get();
 			employeeRepo.deleteById(id);
-			return ResponseEntity.ok().body(null);
+			return ResponseEntity.ok().body("Employee deleted successfully!");
 		}catch (NoSuchElementException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No record found!");
 		}
 	}
 

@@ -11,6 +11,6 @@ import com.example.demo.models.Skill;
 public interface SkillService {
 	public ResponseEntity<?> createSkill(Skill skill);
 	
-	public ResponseEntity<List<Skill>> getSkills();
+	public List<Skill> getSkills();
 
 }

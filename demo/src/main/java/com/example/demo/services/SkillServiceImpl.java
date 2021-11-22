@@ -17,6 +17,7 @@ public class SkillServiceImpl implements SkillService{
 
 	@Override
 	public ResponseEntity<?> createSkill(Skill skill) {
+		System.out.println(skill);
 		try {
 			if(skillRepository.findByTitle(skill.getTitle()) != null) {
 				throw new Exception("Skill already exists!");
@@ -29,8 +30,8 @@ public class SkillServiceImpl implements SkillService{
 	}
 
 	@Override
-	public ResponseEntity<List<Skill>> getSkills() {
-		return ResponseEntity.ok(skillRepository.findAll());
+	public List<Skill> getSkills() {
+		return skillRepository.findAll();
 	}
 
 }

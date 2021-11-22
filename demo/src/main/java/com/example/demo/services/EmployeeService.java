@@ -22,5 +22,5 @@ public interface EmployeeService {
 	public ResponseEntity<?> selectSkills(List<Long> skillIds, long eid);
 
 	public ResponseEntity<?> deSelectSkills(List<Long> skillIds, long eid);
-	
+
 }

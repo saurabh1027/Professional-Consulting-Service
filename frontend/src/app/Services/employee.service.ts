@@ -23,7 +23,7 @@ export class EmployeeService {
   }
 
   public createEmployee(employee:Employee){
-    return this.http.post(this.baseUrl+'employees/',employee)
+    return this.http.post(this.baseUrl+'employees/',employee,{responseType:'text'})
   }
 
   public updateEmployee(employee:Employee){

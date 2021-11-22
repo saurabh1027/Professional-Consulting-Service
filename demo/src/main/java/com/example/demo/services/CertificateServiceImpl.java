@@ -37,7 +37,7 @@ public class CertificateServiceImpl implements CertificateService{
 
 	@Override
 	public ResponseEntity<?> updateCertificate(Certificate newCertificate) {
-		//Check whether cert. present or not. if present then update else exceptino
+		//Check whether cert. present or not. if present then update else exception
 		try {
 			Certificate oldCertificate=certificateRepository.findById(newCertificate.getId()).get();
 			oldCertificate.setDescription(newCertificate.getDescription());

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.employeeService.login(this.employee.email,this.employee.password).subscribe(data=>{
       this.employee = data;
       sessionStorage.setItem('employee',JSON.stringify(this.employee));
-      this.router.navigate(['','dashboard'])
+      this.router.navigate([''])
     },error=>{
       if(error.status==401){
         alert("Password did not matched!")

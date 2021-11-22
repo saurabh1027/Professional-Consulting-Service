@@ -1,37 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Certificate } from 'src/app/Models/Certificate';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Employee } from 'src/app/Models/Employee';
 import { Skill } from 'src/app/Models/Skill';
-import { CertificateService } from 'src/app/Services/certificate.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { SkillService } from 'src/app/Services/skill.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-skill',
+  templateUrl: './skill.component.html',
+  styleUrls: ['./skill.component.css']
 })
-export class DashboardComponent implements OnInit {
-  employee:Employee = new Employee(0,'','','','','',[]);
+export class SkillComponent implements OnInit {
+  employeeSkills:Skill[] = [];
   skill:Skill = new Skill(0,'','','',[]);
   skills:Skill[] = [];
-  index:number = 0;
-  isEmployeesPage:boolean = false;
-  isSkillsPage:boolean = false;
-  isCertificatesPage:boolean = false;
+  employee:Employee = new Employee(0,'','','','','',[]);
 
   constructor(
-    private router:Router,
-    private employeeService:EmployeeService,
     private skillService:SkillService,
-    private certificateService:CertificateService
+    private employeeService:EmployeeService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
-    this.isLoggedIn()
+    this.isLoggedIn();
+    this.getSkills()
+    // this.getSkillsOfEmployee()
   }
-
+  
   isLoggedIn(){
     let employeeString:string|null = sessionStorage.getItem("employee")
     if(employeeString){
@@ -45,24 +41,46 @@ export class DashboardComponent implements OnInit {
         }
       })
     }else{
+      alert("Unauthorized access! Please login")
       this.router.navigate(['','login'])
     }
-  }
-
-  updateEmployee(){
-    this.employeeService.updateEmployee(this.employee).subscribe(data=>{
-      alert(data)
-      sessionStorage.setItem('employee',JSON.stringify(this.employee))
-    },error=>{
-      if(error.status == 400){
-        alert(error)
-      }
-    })
   }
 
   getSkills(){
     this.skillService.getSkills().subscribe(data=>{
       this.skills = data
+      console.log("All skills")
+      console.log(this.skills)
+    })
+  }
+
+  getSkillsOfEmployee(){
+    this.employeeSkills = [];
+    this.skillService.getSkills().subscribe(data=>{
+      this.skills = data
+      console.log(this.skills)
+      if(this.skills){
+        for(let i=0;i<this.skills.length;i++){
+          if(this.skills[i].employees && this.skills[i].employees.length>0){
+            for(let j=0;j<this.skills[i].employees.length;j++){
+              if(this.skills[i].employees[j].id == this.employee.id){
+                this.employeeSkills.push(this.skills[i])
+              }
+            }
+          }
+        }
+      }
+    })
+  }
+
+  addSkill(){
+    this.skillService.createSkill(this.skill).subscribe(data=>{
+      alert(data)
+      this.skill = new Skill(0,'','','',[])
+    },error=>{
+      if(error.status == 400){
+        alert(error)
+      }
     })
   }
 
@@ -105,6 +123,13 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  
+  isSkillSelected(id:number){
+    for(let i=0;i<this.skills.length;i++){
+      if(this.skills[i].id == id){
+        return true;
+      }
+    }
+    return false;
+  }
 
 }

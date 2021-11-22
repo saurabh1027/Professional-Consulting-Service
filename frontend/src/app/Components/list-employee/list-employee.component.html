@@ -1,0 +1,63 @@
+<h2>Employee List</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email Id</th>
+            <th>Bio</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let employee of employees">
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.bio }}</td>
+        <td><button class="btn btn-warning" (click)="deleteEmployees(employee.id)">Delete</button></td>
+         </tr>
+    </tbody>
+    <div class="container center">
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
+    </div>
+</table>
+<!--(click)="deleteEmployees(employee)"-->
+
+
+
+<!-- Add Employee Modal -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true" *ngIf='employee.role=="Manager"' >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="addEmployee()" #form="ngForm" aria-hidden="true"
+                class="d-flex flex-column" style="row-gap: 20px;">
+                <div class="form-group w-100">
+                    <label for="name2">Name</label>
+                    <input required type="email" class="form-control" id="name2" aria-describedby="emailHelp"
+                        name="name" [(ngModel)]='newEmployee.name' placeholder="Enter name">
+                </div>
+                <div class="form-group w-100">
+                    <label for="email1">Email address</label>
+                    <input required type="email" class="form-control" id="email1" name="email"
+                        [(ngModel)]='newEmployee.email' placeholder="Enter email">
+                </div>
+                <div class="form-group w-100">
+                    <label for="password1">Password</label>
+                    <input required type="password" class="form-control" id="password1" placeholder="Password"
+                        name="password" [(ngModel)]="newEmployee.password">
+                </div>
+                <div class="form-group w-100">
+                    <label for="bio1">Bio</label>
+                    <textarea class="form-control" id="bio1" rows="3" name="bio"
+                        placeholder="Enter bio" [(ngModel)]='newEmployee.bio'></textarea>
+                </div>
+                <button [disabled]='form.invalid' data-bs-dismiss="modal" type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>

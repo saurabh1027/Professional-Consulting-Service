@@ -7,12 +7,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { ListEmployeeComponent } from './Components/list-employee/list-employee.component';
+import { CertificateComponent } from './Components/certificate/certificate.component';
+import { SkillComponent } from './Components/skill/skill.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ListEmployeeComponent,
+    CertificateComponent,
+    SkillComponent
   ],
   imports: [
     BrowserModule,

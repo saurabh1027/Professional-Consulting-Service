@@ -1,0 +1,80 @@
+<button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#selectSkillsModal" (click)='getSkills()'>Select Skills</button>
+
+<h2>List of skills</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let skill of employeeSkills">
+            <td>{{ skill.title }}</td>
+            <td>{{ skill.category }}</td>
+            <td>{{ skill.description }}</td>
+            <!-- <td><button class="btn btn-warning" (click)="deleteEmployees(employee.id)">Delete</button></td> -->
+        </tr>
+    </tbody>
+    <li class="list-group-item" *ngIf="employee.role=='Manager'">
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addSkillModal">Add Skill</button>
+    </li>
+</table>
+
+
+
+
+<!-- Add Skill Modal -->
+<div class="modal fade" id="addSkillModal" tabindex="-1" aria-labelledby="addSkillsModalLabel" aria-hidden="true" *ngIf='employee.role=="Manager"'>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSkillsModalLabel">Add Skill</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="addSkill()" #form1="ngForm" aria-hidden="true"
+                class="d-flex flex-column" style="row-gap: 20px;">
+                <div class="form-group w-100">
+                    <label for="title">Title</label>
+                    <input required type="text" class="form-control" id="title" name="title" [(ngModel)]='skill.title' placeholder="Enter title">
+                </div>
+                <div class="form-group w-100">
+                    <label for="category">Category</label>
+                    <input required type="email" class="form-control" id="category" name="category"
+                        [(ngModel)]='skill.category' placeholder="Enter category">
+                </div>
+                <div class="form-group w-100">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="description"
+                        placeholder="Enter description" [(ngModel)]='skill.description' required></textarea>
+                </div>
+                <button [disabled]='form1.invalid' data-bs-dismiss="modal" type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Select Skills Modal -->
+<div class="modal fade" id="selectSkillsModal" tabindex="-1" aria-labelledby="selectSkillsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectSkillsModalLabel">Select Skills</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding-bottom: 70px;">
+                <div class="form-group w-100 position-relative">
+                    <span class="skill border text-light p-2 mx-1" [class.selected]='isSkillSelected(s.id)' 
+                    [class.bg-secondary]='!isSkillSelected(s.id)' style="cursor: pointer;"
+                        *ngFor='let s of skills' (click)='toggleSkill(s.id)'>{{s.title}}</span>
+                </div>
+                <button type="button" class="btn btn-primary" style="position: absolute; bottom: 10px;
+                left: 50%;transform: translateX(-50%);" data-bs-dismiss="modal" (click)='selectSkills()'>Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
