@@ -25,7 +25,7 @@ export class SkillComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn();
     this.getSkills()
-    // this.getSkillsOfEmployee()
+  // this.getSkillsOfEmployee()
   }
   
   isLoggedIn(){
@@ -34,6 +34,7 @@ export class SkillComponent implements OnInit {
       this.employee = JSON.parse(employeeString)
       this.employeeService.getEmployee(this.employee.id).subscribe(data=>{
         this.employee = data
+        console.log(this.employee)
         sessionStorage.setItem('employee',JSON.stringify(this.employee))
       },error=>{
         if(error.status==400){
@@ -47,30 +48,30 @@ export class SkillComponent implements OnInit {
   }
 
   getSkills(){
+ 
+    this.skills=[]
     this.skillService.getSkills().subscribe(data=>{
       this.skills = data
-      console.log("All skills")
-      console.log(this.skills)
+     console.log(this.skills)
+     this.getSkillsOfEmployee()
+     
     })
   }
 
   getSkillsOfEmployee(){
     this.employeeSkills = [];
-    this.skillService.getSkills().subscribe(data=>{
-      this.skills = data
-      console.log(this.skills)
-      if(this.skills){
-        for(let i=0;i<this.skills.length;i++){
-          if(this.skills[i].employees && this.skills[i].employees.length>0){
-            for(let j=0;j<this.skills[i].employees.length;j++){
-              if(this.skills[i].employees[j].id == this.employee.id){
-                this.employeeSkills.push(this.skills[i])
-              }
+    if(this.skills){
+      for(let i=0;i<this.skills.length;i++){
+        if(this.skills[i].employees && this.skills[i].employees.length>0){
+          for(let j=0;j<this.skills[i].employees.length;j++){
+            if(this.skills[i].employees[j].id == this.employee.id){
+              this.employeeSkills.push(this.skills[i])
             }
           }
         }
       }
-    })
+    }
+
   }
 
   addSkill(){
@@ -78,8 +79,10 @@ export class SkillComponent implements OnInit {
       alert(data)
       this.skill = new Skill(0,'','','',[])
     },error=>{
+      
+      
       if(error.status == 400){
-        alert(error)
+        alert("Already Exists!")
       }
     })
   }
@@ -96,9 +99,9 @@ export class SkillComponent implements OnInit {
       if(spans[i].textContent==skill.title){
         if(spans[i].classList.contains('selected')){
           spans[i].classList.remove('selected')
-          spans[i].classList.add('bg-secondary')
+          spans[i].classList.add('deselected')
         }else{
-          spans[i].classList.remove('bg-secondary')
+          spans[i].classList.remove('deselected')
           spans[i].classList.add('selected')
         }
       }
@@ -106,30 +109,61 @@ export class SkillComponent implements OnInit {
 
   }
 
+  // selectSkills(){
+  //   let selectedSkillsIds:number[] = []
+  //   let spans = document.getElementsByClassName('selected');
+  //   for(let i=0;i<spans.length;i++){
+  //     for(let j=0;j<this.skills.length;j++){
+  //       if(spans[i].textContent == this.skills[j].title){
+  //         selectedSkillsIds.push(this.skills[j].id)
+  //       }
+  //     }
+  //   }
+  //   this.skillService.selectSkills(selectedSkillsIds,this.employee.id).subscribe(data=>{
+  //     alert(data)
+  //   },error=>{
+  //     alert(error)
+  //   })
+  // }
   selectSkills(){
-    let selectedSkillsIds:number[] = []
     let spans = document.getElementsByClassName('selected');
+    let spans1 = document.getElementsByClassName('selected');
     for(let i=0;i<spans.length;i++){
       for(let j=0;j<this.skills.length;j++){
         if(spans[i].textContent == this.skills[j].title){
-          selectedSkillsIds.push(this.skills[j].id)
+          this.selectSkill(this.skills[j].id)
         }
       }
     }
-    this.skillService.selectSkills(selectedSkillsIds,this.employee.id).subscribe(data=>{
-      alert(data)
-    },error=>{
-      alert(error)
-    })
+    for(let i=0;i<spans1.length;i++){
+      for(let j=0;j<this.skills.length;j++){
+        if(spans1[i].textContent == this.skills[j].title){
+          this.deselectSkill(this.skills[j].id)
+        }
+      }
+    }
   }
 
   isSkillSelected(id:number){
-    for(let i=0;i<this.skills.length;i++){
-      if(this.skills[i].id == id){
+    for(let i=0;i<this.employeeSkills.length;i++){
+      if(this.employeeSkills[i].id == id){
         return true;
       }
     }
     return false;
+  }
+  selectSkill(id:number){
+    this.skillService.selectSkill(id,this.employee.id).subscribe(data=>{
+      
+    },error=>{
+      alert(" Unable to select skill")
+    })
+  }
+  deselectSkill(id:number){
+    this.skillService.deselectSkill(id,this.employee.id).subscribe(data=>{
+    },error=>{
+      alert("Unable to deselect skill")
+    })
   }
 
 }

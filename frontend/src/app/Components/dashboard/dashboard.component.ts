@@ -60,50 +60,8 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  getSkills(){
-    this.skillService.getSkills().subscribe(data=>{
-      this.skills = data
-    })
-  }
-
-  toggleSkill(id:number){
-    let spans = document.getElementsByClassName('skill');
-    let skill:Skill = new Skill(0,'','','',[])
-    for(let i=0;i<this.skills.length;i++){
-      if(this.skills[i].id==id){
-        skill = this.skills[i];
-      }
-    }
-    for(let i=0;i<spans.length;i++){
-      if(spans[i].textContent==skill.title){
-        if(spans[i].classList.contains('selected')){
-          spans[i].classList.remove('selected')
-          spans[i].classList.add('bg-secondary')
-        }else{
-          spans[i].classList.remove('bg-secondary')
-          spans[i].classList.add('selected')
-        }
-      }
-    }
-
-  }
-
-  selectSkills(){
-    let selectedSkillsIds:number[] = []
-    let spans = document.getElementsByClassName('selected');
-    for(let i=0;i<spans.length;i++){
-      for(let j=0;j<this.skills.length;j++){
-        if(spans[i].textContent == this.skills[j].title){
-          selectedSkillsIds.push(this.skills[j].id)
-        }
-      }
-    }
-    this.skillService.selectSkills(selectedSkillsIds,this.employee.id).subscribe(data=>{
-      alert(data)
-    },error=>{
-      alert(error)
-    })
-  }
+  
+ 
 
   
 

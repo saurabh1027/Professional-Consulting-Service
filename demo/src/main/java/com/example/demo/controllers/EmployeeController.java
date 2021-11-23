@@ -61,6 +61,16 @@ public class EmployeeController {
 		return employeeService.selectSkills(skillIds,eid);
 	}
 	
+	@PutMapping("{id}/skills/{sId}")
+	public ResponseEntity<?> selectSkill(@PathVariable("id") long eid,@PathVariable("sId") long sId){
+		return employeeService.selectSkill(eid,sId);
+	}
+	@DeleteMapping("{id}/skills/{sId}")
+	public ResponseEntity<?> deselectSkill(@PathVariable("id") long eid,@PathVariable("sId") long sId){
+		return employeeService.deselectSkill(eid,sId);
+	}
+	
+	
 	@DeleteMapping("{id}/skills")
 	public ResponseEntity<?> deSelectSkills(@RequestBody List<Long> skillIds,@PathVariable("id") long eid){
 		return employeeService.deSelectSkills(skillIds,eid);

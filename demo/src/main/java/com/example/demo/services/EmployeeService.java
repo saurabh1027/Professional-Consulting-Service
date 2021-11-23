@@ -23,4 +23,8 @@ public interface EmployeeService {
 
 	public ResponseEntity<?> deSelectSkills(List<Long> skillIds, long eid);
 
+	public ResponseEntity<?> selectSkill(long eid, long sId);
+
+	public ResponseEntity<?> deselectSkill(long eid, long sId);
+
 }

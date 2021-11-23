@@ -15,11 +15,14 @@ import com.example.demo.repositories.SkillRepository;
 
 @Component
 public class EmployeeServiceImpl implements EmployeeService {
+	
 
 	@Autowired
 	private EmployeeRepo employeeRepo;
 	@Autowired
 	private SkillRepository skillRepository;
+	
+	
 
 	@Override
 	public ResponseEntity<?> createEmployee(Employee employee) {
@@ -115,4 +118,39 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<?> selectSkill(long eid, long sId) {
+		try {
+			Employee employee = employeeRepo.findById(eid).get();
+			Skill skill = skillRepository.findById(sId).get();
+			
+			skill.getEmployees().add(employee);
+			
+			employee.getSkills().add(skill);
+			
+			employeeRepo.save(employee);
+			return ResponseEntity.ok().body("Skill selected successfully!");
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No Element Found!");
+		}
+
+	}
+
+	@Override
+	public ResponseEntity<?> deselectSkill(long eid, long sId) {
+		try {
+			Employee employee = employeeRepo.findById(eid).get();
+			Skill skill = skillRepository.findById(sId).get();
+			skill.getEmployees().remove(employee);
+			employee.getSkills().remove(skill);
+			employeeRepo.save(employee);
+			
+			return ResponseEntity.ok().body("Skill deselected successfully!");
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No Element Found!");
+		}
+
+	}
 }

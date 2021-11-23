@@ -24,5 +24,11 @@ export class SkillService {
   public selectSkills(selectedSkillsIds:number[],eid:number){
     return this.http.put(this.baseUrl+'employees/'+eid+"/skills",selectedSkillsIds,{responseType:'text'})
   }
+  public selectSkill(selectedSkillId:number,eid:number){
+    return this.http.put(this.baseUrl+'employees/'+eid+"/skills/"+selectedSkillId,{responseType:'text'})
+  }
+  public deselectSkill(deselectedSkillId:number,eid:number){
+    return this.http.delete(this.baseUrl+'employees/'+eid+"/skills/"+deselectedSkillId,{responseType:'text'})
+  }
 
 }

@@ -31,7 +31,7 @@ export class EmployeeService {
   }
 
   public deleteEmployee(id:number){
-    return this.http.delete(this.baseUrl+'employees/'+id)
+    return this.http.delete(this.baseUrl+'employees/'+id,{responseType:"text"})
   }
 
   public getEmployees():Observable<Employee[]>{
